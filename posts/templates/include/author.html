@@ -1,0 +1,49 @@
+{% load posts_tags %}
+<div class="col-md-3 mb-3 mt-1">
+                    <div class="card">
+                            <div class="card-body">
+                                    <div class="h2">
+                                        <!-- Имя автора -->
+                                        {{ author.get_full_name }}
+                                    </div>
+                                    <div class="h3 text-muted">
+                                         <!-- username автора -->
+                                         {{ author.username }}
+                                    </div>
+                            </div>
+                            <ul class="list-group list-group-flush">
+                                    <li class="list-group-item">
+                                            <div class="h6 text-muted">
+                                            Подписчиков: {{ author.following.count }} <br />
+                                            Подписан: {{ author.follower.count }}
+                                            </div>
+                                    </li>
+                                    <li class="list-group-item">
+                                            <div class="h6 text-muted">
+                                                <!-- Количество записей -->
+                                                Записей: {{ author.posts.count }}
+                                            </div>
+                                    </li>
+                                {% if author != request.user and request.user.is_authenticated %}
+                                     <li class="list-group-item">
+                                         {% is_subscribed request.user author as is_sub %}
+                                         {% if is_sub %}
+                                             <form action="{% url 'profile_unfollow' username=author.username %}" type="post" method="post">
+                                                {% csrf_token %}
+                                                 <input type="hidden" name="next" value="{{ request.path }}">
+                                                <button class="btn btn-lg btn-light" type="submit">Отписаться</button>
+                                             </form>
+
+                                         {% else %}
+                                             <form action="{% url 'profile_follow' username=author.username %}" type="" method="post">
+                                                {% csrf_token %}
+                                                 <input type="hidden" name="next" value="{{ request.path }}">
+                                                <button class="btn btn-lg btn-light" type="submit">Подписаться</button>
+                                             </form>
+                                         {% endif %}
+                                     </li>
+                                {% endif %}
+                            </ul>
+
+                    </div>
+            </div>
