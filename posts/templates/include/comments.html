@@ -15,13 +15,11 @@
 </div>
 {% endif %}
 
-<!-- Комментарии -->
 {% for item in comments %}
 <div class="media card mb-4">
     <div class="media-body card-body">
         <h5 class="mt-0">
-            <a href="{% url 'profile' item.author.username %}"
-               name="comment_{{ item.id }}">
+            <a href="{% url 'profile' item.author.username %}">
                 {{ item.author.username }}
             </a>
             <small class="text-muted"> - {{ post.pub_date }}</small>

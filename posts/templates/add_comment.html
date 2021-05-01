@@ -9,7 +9,6 @@
         <div class="card">
             <div class="card-header">Добавить комментарий</div>
             <div class="card-body">
-
                 <form method="post">
                     {% csrf_token %}
                     {% for field in form %}
@@ -35,9 +34,9 @@
                     </div>
                 </form>
 
-            </div> <!-- card body -->
-        </div> <!-- card -->
-    </div> <!-- col -->
-</div> <!-- row -->
+            </div>
+        </div>
+    </div>
+</div>
 
 {% endblock %}

@@ -5,7 +5,9 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from .models import (Post, Comment, Follow, Viewing)
 from .forms import (PostForm, CommentForm)
 from django.contrib.auth import get_user_model
-from django.shortcuts import get_object_or_404, redirect
+from django.shortcuts import get_object_or_404, redirect, render
+from .permissions import AuthorPermissionMixin
+from django.views.generic.base import TemplateView
 
 User = get_user_model()
 
@@ -38,7 +40,7 @@ class PostCreateView(LoginRequiredMixin, CreateView):
         return super().form_valid(form)
 
 
-class ProfileView(LoginRequiredMixin, ListView):
+class ProfileView(ListView):
     model = Post
     template_name = 'profile.html'
     ordering = '-pub_date'
@@ -54,7 +56,7 @@ class ProfileView(LoginRequiredMixin, ListView):
         return context
 
 
-class PostDetailView(LoginRequiredMixin, DetailView):
+class PostDetailView(DetailView):
     model = Post
     template_name = 'post_detail.html'
     context_object_name = 'post'
@@ -71,12 +73,17 @@ class PostDetailView(LoginRequiredMixin, DetailView):
         return context
 
 
-class PostUpdateView(LoginRequiredMixin, UpdateView):
+class PostUpdateView(AuthorPermissionMixin, LoginRequiredMixin, UpdateView):
+    model = Post
     form_class = PostForm
     slug_field = 'author__username'
     slug_url_kwarg = 'username'
     query_pk_and_slug = True
     template_name = 'edit.html'
+
+    def get_object(self, queryset=None):
+        print(self.kwargs)
+        return super().get_object(queryset)
 
 
 class CommentCreateView(LoginRequiredMixin, CreateView):
@@ -111,7 +118,13 @@ class FollowDeleteView(LoginRequiredMixin, View):
         return redirect(request.POST.get('next', '/'), username=username)
 
 
+def handler403(request, exception):
+    return render(request, 'errors/403.html', status=403)
 
 
+def handler404(request, exception):
+    return render(request, 'errors/404.html', status=404)
 
 
+def handler500(request):
+    return render(request, 'errors/500.html', status=500)

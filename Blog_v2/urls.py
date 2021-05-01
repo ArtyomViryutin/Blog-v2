@@ -10,6 +10,11 @@ urlpatterns = [
     path('', include('posts.urls')),
 ]
 
+handler403 = 'posts.views.handler403'
+handler404 = 'posts.views.handler404'
+handler500 = 'posts.views.handler500'
+
+
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
     urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
