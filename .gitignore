@@ -129,6 +129,4 @@ dmypy.json
 .pyre/
 .idea/
 /media/
-static/
-posts/static/
 data/
