@@ -1,6 +1,6 @@
+{% load posts_tags %}
 <div class="card mb-3 mt-1 shadow-sm">
 
-  <!-- Отображение картинки -->
   {% load thumbnail %}
   {% thumbnail post.image "960x339" crop="center" upscale=True as im %}
   <img alt="Изоображение" class="card-img" src="{{ im.url }}" />
@@ -15,6 +15,16 @@
           Читать
         </a>
       {% endif %}
+        {% is_viewed request.user post as viewed %}
+        {% if post_page and not viewed %}
+            <form action="{% url 'mark_as_read' post.author.username post.id %}" method="post">
+                {% csrf_token %}
+                <input type="hidden" name="next" value="{{ request.path }}">
+                 <button class="btn btn-sm btn-primary" type="submit">
+                    Отметить как прочитанный
+                 </button>
+            </form>
+        {% endif %}
   </div>
     <p class="card-text">
         {% if post_page %}

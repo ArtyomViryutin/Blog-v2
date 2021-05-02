@@ -3,11 +3,9 @@
                     <div class="card">
                             <div class="card-body">
                                     <div class="h2">
-                                        <!-- Имя автора -->
                                         {{ author.get_full_name }}
                                     </div>
                                     <div class="h3 text-muted">
-                                         <!-- username автора -->
                                          {{ author.username }}
                                     </div>
                             </div>
@@ -27,14 +25,14 @@
                                      <li class="list-group-item">
                                          {% is_subscribed request.user author as is_sub %}
                                          {% if is_sub %}
-                                             <form action="{% url 'profile_unfollow' username=author.username %}" type="post" method="post">
+                                             <form action="{% url 'profile_unfollow' username=author.username %}" method="post">
                                                 {% csrf_token %}
                                                  <input type="hidden" name="next" value="{{ request.path }}">
                                                 <button class="btn btn-lg btn-light" type="submit">Отписаться</button>
                                              </form>
 
                                          {% else %}
-                                             <form action="{% url 'profile_follow' username=author.username %}" type="" method="post">
+                                             <form action="{% url 'profile_follow' username=author.username %}" method="post">
                                                 {% csrf_token %}
                                                  <input type="hidden" name="next" value="{{ request.path }}">
                                                 <button class="btn btn-lg btn-light" type="submit">Подписаться</button>

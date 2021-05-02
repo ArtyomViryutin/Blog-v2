@@ -9,6 +9,7 @@ urlpatterns = [
     path('<str:username>/follow/', views.FollowCreateView.as_view(), name='profile_follow'),
     path('<str:username>/unfollow/', views.FollowDeleteView.as_view(), name='profile_unfollow'),
     path('<str:username>/<int:pk>/', views.PostDetailView.as_view(), name='post'),
+    path('<str:username>/<int:pk>/mark_as_read/', views.ViewingCreateView.as_view(), name='mark_as_read'),
     path('<str:username>/<int:pk>/comment', views.CommentCreateView.as_view(), name='add_comment'),
     path('<str:username>/<int:pk>/edit/', views.PostUpdateView.as_view(), name='post_edit'),
 ]

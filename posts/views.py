@@ -41,14 +41,12 @@ class PostCreateView(LoginRequiredMixin, CreateView):
 
 
 class ProfileView(ListView):
-    model = Post
     template_name = 'profile.html'
-    ordering = '-pub_date'
     paginate_by = 10
 
     def get_queryset(self):
         self.author = get_object_or_404(User, username=self.kwargs.get('username'))
-        return self.author.posts.all()
+        return self.author.posts.all().order_by('-pub_date')
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -115,6 +113,13 @@ class FollowDeleteView(LoginRequiredMixin, View):
         author = get_object_or_404(User, username=username)
         follow = get_object_or_404(Follow, author=author, user=request.user)
         follow.delete()
+        return redirect(request.POST.get('next', '/'), username=username)
+
+
+class ViewingCreateView(LoginRequiredMixin, View):
+    def post(self, request, username, pk):
+        post = get_object_or_404(Post, author__username=username, id=pk)
+        Viewing.objects.get_or_create(post=post, user=request.user)
         return redirect(request.POST.get('next', '/'), username=username)
 
 
