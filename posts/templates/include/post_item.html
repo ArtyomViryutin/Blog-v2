@@ -16,17 +16,23 @@
           Читать
         </a>
       {% endif %}
-        {% if post_page %}
+        {% if request.user.is_authenticated and request.user != post.author%}
             {% is_viewed request.user post as viewed %}
             {% if not viewed %}
                 <form action="{% url 'mark_as_read' post.author.username post.id %}" method="post">
                     {% csrf_token %}
                     <input type="hidden" name="next" value="{{ request.path }}">
-                     <button class="btn btn-sm btn-primary" type="submit">
+                     <button class="btn btn-sm btn-primary ml-1" type="submit">
                         Отметить как прочитанный
                      </button>
                 </form>
+            {% else %}
+            <button class="btn btn-sm btn-primary ml-1" disabled>Прочитано</button>
             {% endif %}
+        {% endif %}
+
+        {% if post_page %}
+
         {% endif %}
   </div>
     <p class="card-text">

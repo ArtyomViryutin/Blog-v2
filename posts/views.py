@@ -2,7 +2,7 @@ from django.urls import reverse
 from django.views.generic import (DetailView, ListView, CreateView, UpdateView)
 from django.views import View
 from django.contrib.auth.mixins import LoginRequiredMixin
-from .models import (Post, Comment, Follow, Viewing)
+from .models import (Post, Follow, Viewing)
 from .forms import (PostForm, CommentForm)
 from django.contrib.auth import get_user_model
 from django.shortcuts import get_object_or_404, redirect, render
@@ -112,7 +112,8 @@ class FollowDeleteView(LoginRequiredMixin, View):
 class ViewingCreateView(LoginRequiredMixin, View):
     def post(self, request, username, pk):
         post = get_object_or_404(Post, author__username=username, id=pk)
-        Viewing.objects.get_or_create(post=post, user=request.user)
+        if request.user != post.author:
+            Viewing.objects.get_or_create(post=post, user=request.user)
         return redirect(request.POST.get('next', '/'), username=username)
 
 
