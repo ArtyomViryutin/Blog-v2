@@ -6,6 +6,7 @@ User = get_user_model()
 
 
 class Post(models.Model):
+    title = models.CharField('Заголовок', max_length=128, help_text='Введите заголовок поста', default='Новый пост')
     text = models.TextField('Текст', help_text='Введите содержимое поста')
     pub_date = models.DateTimeField('Дата публикации поста', auto_now_add=True)
     author = models.ForeignKey(User, on_delete=models.CASCADE, related_name='posts', verbose_name='Автор')
@@ -48,6 +49,7 @@ class Follow(models.Model):
     class Meta:
         verbose_name = 'Подсписка'
         verbose_name_plural = 'Подписки'
+        unique_together = ('author', 'user')
 
 
 class Viewing(models.Model):
@@ -61,3 +63,4 @@ class Viewing(models.Model):
     class Meta:
         verbose_name = 'Просмотр'
         verbose_name_plural = 'Просмотры'
+        unique_together = ('post', 'user')

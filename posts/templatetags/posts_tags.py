@@ -11,4 +11,6 @@ def is_subscribed(user, author):
 
 @register.simple_tag
 def is_viewed(user, post):
-    return Viewing.objects.filter(post=post, user=user).exists()
+    if user.is_authenticated:
+        return Viewing.objects.filter(post=post, user=user).exists()
+    return False

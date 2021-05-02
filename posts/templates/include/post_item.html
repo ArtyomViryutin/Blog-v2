@@ -6,8 +6,9 @@
   <img alt="Изоображение" class="card-img" src="{{ im.url }}" />
   {% endthumbnail %}
   <div class="card-body">
+  <h3>{{ post.title }}</h3>
   <div class="d-flex">
-    <a href="{% url 'profile' post.author.username %}" class="mr-auto">
+      <a href="{% url 'profile' post.author.username %}" class="mr-auto">
         <strong class="d-block text-gray-dark">@{{ post.author }}</strong>
       </a>
       {% if not post_page %}
@@ -15,15 +16,17 @@
           Читать
         </a>
       {% endif %}
-        {% is_viewed request.user post as viewed %}
-        {% if post_page and not viewed %}
-            <form action="{% url 'mark_as_read' post.author.username post.id %}" method="post">
-                {% csrf_token %}
-                <input type="hidden" name="next" value="{{ request.path }}">
-                 <button class="btn btn-sm btn-primary" type="submit">
-                    Отметить как прочитанный
-                 </button>
-            </form>
+        {% if post_page %}
+            {% is_viewed request.user post as viewed %}
+            {% if not viewed %}
+                <form action="{% url 'mark_as_read' post.author.username post.id %}" method="post">
+                    {% csrf_token %}
+                    <input type="hidden" name="next" value="{{ request.path }}">
+                     <button class="btn btn-sm btn-primary" type="submit">
+                        Отметить как прочитанный
+                     </button>
+                </form>
+            {% endif %}
         {% endif %}
   </div>
     <p class="card-text">

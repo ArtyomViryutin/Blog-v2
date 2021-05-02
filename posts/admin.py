@@ -5,13 +5,16 @@ from django.utils.safestring import mark_safe
 
 @admin.register(Post)
 class PostAdmin(admin.ModelAdmin):
-    list_display = ('pk', 'author', 'pub_date')
+    list_display = ('pk', 'author', 'title', 'pub_date')
     list_filter = ('pub_date', 'author')
     search_fields = ('text',)
     readonly_fields = ('get_image',)
     fieldsets = (
         (None, {
             'fields': (('author',),)
+        }),
+        (None, {
+            'fields': (('title',),)
         }),
         (None, {
             'fields': (('text',),)

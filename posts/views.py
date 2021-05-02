@@ -7,7 +7,6 @@ from .forms import (PostForm, CommentForm)
 from django.contrib.auth import get_user_model
 from django.shortcuts import get_object_or_404, redirect, render
 from .permissions import AuthorPermissionMixin
-from django.views.generic.base import TemplateView
 
 User = get_user_model()
 
@@ -54,7 +53,7 @@ class ProfileView(ListView):
         return context
 
 
-class PostDetailView(DetailView):
+class PostDetailView(LoginRequiredMixin, DetailView):
     model = Post
     template_name = 'post_detail.html'
     context_object_name = 'post'
@@ -66,8 +65,6 @@ class PostDetailView(DetailView):
         context = super().get_context_data(**kwargs)
         context['form'] = CommentForm()
         context['comments'] = self.object.comments.all().order_by('-created')
-        is_subscribed = Follow.objects.filter(author=self.object.author, user=self.request.user)
-        context['is_subscribed'] = is_subscribed
         return context
 
 
@@ -78,10 +75,6 @@ class PostUpdateView(AuthorPermissionMixin, LoginRequiredMixin, UpdateView):
     slug_url_kwarg = 'username'
     query_pk_and_slug = True
     template_name = 'edit.html'
-
-    def get_object(self, queryset=None):
-        print(self.kwargs)
-        return super().get_object(queryset)
 
 
 class CommentCreateView(LoginRequiredMixin, CreateView):
