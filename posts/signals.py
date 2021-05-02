@@ -7,6 +7,6 @@ from posts.tasks import send_mails
 @receiver(post_save, sender=Post)
 def notify_followers(sender, instance, created, **kwargs):
     if created:
-        send_mails.delay(instance.get_absolute_url(), instance.author_id)
+        send_mails.delay(instance.id)
 
 

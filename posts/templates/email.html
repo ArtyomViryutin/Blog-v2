@@ -122,19 +122,11 @@
         }
     </style>
 </head>
-
     <!-- big image section -->
     <table border="0" width="100%" cellpadding="0" cellspacing="0" bgcolor="ffffff" class="bg_color">
-
         <tr>
             <td align="center">
                 <table border="0" align="center" width="590" cellpadding="0" cellspacing="0" class="container590">
-                    <tr>
-
-                        <td align="center" class="section-img">
-                            <a href="" style=" border-style: none !important; display: block; border: 0 !important;"><img src="../static/image.jpg" style="display: block; width: 590px;" width="400" height="500" border="0" alt="Изображение" /></a>
-                        </td>
-                    </tr>
                     <tr>
                         <td height="20" style="font-size: 20px; line-height: 20px;">&nbsp;</td>
                     </tr>
@@ -142,7 +134,7 @@
                         <td align="center" style="color: #343434; font-size: 24px; font-family: Quicksand, Calibri, sans-serif; font-weight:700;letter-spacing: 3px; line-height: 35px;"
                             class="main-header">
                             <div style="line-height: 35px">
-                                Новый пост у <span style="color: #5caad2;">{{ author_username }}</span>
+                                Новый пост у <span style="color: #5caad2;">{{ post.author.username }}</span>
                             </div>
                         </td>
                     </tr>
@@ -162,7 +154,8 @@
                                 <tr>
                                     <td align="center" style="color: #888888; font-size: 16px; font-family: 'Work Sans', Calibri, sans-serif; line-height: 24px;">
                                         <div style="line-height: 24px">
-                                            Вы получили данное уведомление, так как пользователь под ником {{ author_username }} опубликовал новый пост.
+                                            Вы получили данное уведомление, так как пользователь под ником {{ post.author.username }} опубликовал новый пост под
+                                            названием {{ post.title }}.
                                         </div>
                                     </td>
                                 </tr>
@@ -175,17 +168,13 @@
                     <tr>
                         <td align="center">
                             <table border="0" align="center" width="160" cellpadding="0" cellspacing="0" bgcolor="5caad2" style="">
-
                                 <tr>
                                     <td height="10" style="font-size: 10px; line-height: 10px;">&nbsp;</td>
                                 </tr>
-
                                 <tr>
                                     <td align="center" style="color: #ffffff; font-size: 14px; font-family: 'Work Sans', Calibri, sans-serif; line-height: 26px;">
-
-
                                         <div style="line-height: 26px;">
-                                            <a href="{{ post_url }}" style="color: #ffffff; text-decoration: none;">СМОТРЕТЬ</a>
+                                            <a href="http://localhost:8000/{{ post.get_absolute_url }}" style="color: #ffffff; text-decoration: none;">СМОТРЕТЬ</a>
                                         </div>
                                     </td>
                                 </tr>
@@ -193,24 +182,11 @@
                                 <tr>
                                     <td height="10" style="font-size: 10px; line-height: 10px;">&nbsp;</td>
                                 </tr>
-
                             </table>
                         </td>
                     </tr>
                 </table>
-
             </td>
         </tr>
-
-        <tr class="hide">
-            <td height="25" style="font-size: 25px; line-height: 25px;">&nbsp;</td>
-        </tr>
-        <tr>
-            <td height="40" style="font-size: 40px; line-height: 40px;">&nbsp;</td>
-        </tr>
-
     </table>
-    <!-- end section -->
-
-</body>
 </html>
