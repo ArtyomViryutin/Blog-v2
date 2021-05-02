@@ -1,3 +1,4 @@
+from django.db.models import Case, When
 from django.urls import reverse
 from django.views.generic import (DetailView, ListView, CreateView, UpdateView)
 from django.views import View
@@ -25,7 +26,12 @@ class FollowPostsListView(LoginRequiredMixin, ListView):
     def get_queryset(self):
         authors = Follow.objects.filter(user=self.request.user).values_list('author_id')
         posts = Post.objects.filter(author__id__in=authors)
-        return posts.order_by('-pub_date')
+        viewings = Viewing.objects.filter(user=self.request.user).values_list('post_id')
+        posts = posts.annotate(ordering=Case(
+            When(id__in=viewings, then=1),
+            default=0
+        )).order_by('ordering', '-pub_date')
+        return posts
 
 
 class PostCreateView(LoginRequiredMixin, CreateView):
@@ -45,7 +51,13 @@ class ProfileView(ListView):
 
     def get_queryset(self):
         self.author = get_object_or_404(User, username=self.kwargs.get('username'))
-        return self.author.posts.all().order_by('-pub_date')
+        posts = self.author.posts
+        viewings = Viewing.objects.filter(user=self.request.user).values_list('post_id')
+        posts = posts.annotate(ordering=Case(
+            When(id__in=viewings, then=1),
+            default=0
+        )).order_by('ordering', '-pub_date')
+        return posts
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

@@ -16,7 +16,7 @@
           Читать
         </a>
       {% endif %}
-        {% if request.user.is_authenticated and request.user != post.author%}
+        {% if not mark_as_read and request.user.is_authenticated and request.user != post.author%}
             {% is_viewed request.user post as viewed %}
             {% if not viewed %}
                 <form action="{% url 'mark_as_read' post.author.username post.id %}" method="post">
