@@ -132,7 +132,7 @@
                     <tr>
 
                         <td align="center" class="section-img">
-                            <a href="" style=" border-style: none !important; display: block; border: 0 !important;"><img src="../email_media/image.jpg" style="display: block; width: 590px;" width="400" height="500" border="0" alt="Изображение" /></a>
+                            <a href="" style=" border-style: none !important; display: block; border: 0 !important;"><img src="../../email_media/image.jpg" style="display: block; width: 590px;" width="400" height="500" border="0" alt="Изображение" /></a>
                         </td>
                     </tr>
                     <tr>
@@ -145,7 +145,7 @@
 
                             <div style="line-height: 35px">
 
-                                Новый пост у <span style="color: #5caad2;">{{ username }}</span>
+                                Новый пост у <span style="color: #5caad2;">{{ author_username }}</span>
                             </div>
                         </td>
                     </tr>
@@ -176,7 +176,7 @@
 
 
                                         <div style="line-height: 24px">
-                                            Вы получили данное уведомление, так как пользователь под ником {{ username }} опубликовал новый пост.
+                                            Вы получили данное уведомление, так как пользователь под ником {{ author_username }} опубликовал новый пост.
                                         </div>
                                     </td>
                                 </tr>
@@ -201,7 +201,7 @@
 
 
                                         <div style="line-height: 26px;">
-                                            <a href="" style="color: #ffffff; text-decoration: none;">СМОТРЕТЬ</a>
+                                            <a href="{{ post_url }}" style="color: #ffffff; text-decoration: none;">СМОТРЕТЬ</a>
                                         </div>
                                     </td>
                                 </tr>
