@@ -24,5 +24,5 @@ class AboutTechView(TemplateView):
         context['description'] = 'Используемые технологии'
         context['technologies'] = [{'label': 'Django', 'url': 'https://www.djangoproject.com/'},
                                    {'label': 'Python', 'url': 'https://www.python.org/'},
-                                   {'label': 'HTML, CSS', 'url': 'http://htmlbook.ru/html'}]
+                                   {'label': 'HTML, CSS', 'url': 'https://htmlbook.ru/html'}]
         return context
