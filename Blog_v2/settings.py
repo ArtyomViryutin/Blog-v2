@@ -123,6 +123,12 @@ USE_L10N = True
 USE_TZ = True
 
 
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+    }
+}
+
 # Static files (CSS, JavaScript, Images)
 STATIC_URL = '/static/'
 STATIC_DIR = BASE_DIR / 'static'
