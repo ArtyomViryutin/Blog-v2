@@ -59,7 +59,7 @@ Simple Blog implementation in Django
     `CELERY_BROKER_URL=redis://redis:6379`
 
 
-3) `$ docker-compose up`
+3) `$ docker-compose up --build`
 
 ## Usage
 ### Blog
@@ -68,6 +68,9 @@ Simple Blog implementation in Django
 3) _Your own_
 
 ### Flower
-_http://127.0.0.1:5555/_
+1) _http://localhost:5555/_
+
+2) _http://127.0.0.1:5555/_
+
 
 
