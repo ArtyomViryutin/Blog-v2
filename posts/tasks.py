@@ -1,4 +1,5 @@
 from celery import shared_task
+
 from posts.services import send_mails_to_followers
 
 

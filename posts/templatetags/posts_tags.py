@@ -1,4 +1,5 @@
 from django import template
+
 from posts.models import Follow, Viewing
 
 register = template.Library()

@@ -1,13 +1,14 @@
-from django.db.models import Case, When
-from django.urls import reverse
-from django.views.generic import (DetailView, ListView, CreateView, UpdateView)
-from django.views import View
-from django.contrib.auth.mixins import LoginRequiredMixin
-from .models import (Post, Follow, Viewing)
-from .forms import (PostForm, CommentForm)
 from django.contrib.auth import get_user_model
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import get_object_or_404, redirect, render
+from django.urls import reverse
+from django.views import View
+from django.views.generic import CreateView, DetailView, ListView, UpdateView
+
+from .forms import CommentForm, PostForm
+from .models import Follow, Post, Viewing
 from .permissions import AuthorPermissionMixin
+from .services import sort_posts_by_user_viewings_and_date
 
 User = get_user_model()
 
@@ -26,11 +27,7 @@ class FollowPostsListView(LoginRequiredMixin, ListView):
     def get_queryset(self):
         authors = Follow.objects.filter(user=self.request.user).values_list('author_id')
         posts = Post.objects.filter(author__id__in=authors)
-        viewings = Viewing.objects.filter(user=self.request.user).values_list('post_id')
-        posts = posts.annotate(ordering=Case(
-            When(id__in=viewings, then=1),
-            default=0
-        )).order_by('ordering', '-pub_date')
+        posts = sort_posts_by_user_viewings_and_date(self.request.user.id, posts)
         return posts
 
 
@@ -52,11 +49,7 @@ class ProfileView(ListView):
     def get_queryset(self):
         self.author = get_object_or_404(User, username=self.kwargs.get('username'))
         posts = self.author.posts
-        viewings = Viewing.objects.filter(user=self.request.user).values_list('post_id')
-        posts = posts.annotate(ordering=Case(
-            When(id__in=viewings, then=1),
-            default=0
-        )).order_by('ordering', '-pub_date')
+        posts = sort_posts_by_user_viewings_and_date(self.request.user.id, posts)
         return posts
 
     def get_context_data(self, **kwargs):
