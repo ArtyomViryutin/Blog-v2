@@ -28,8 +28,7 @@ services:
     ports:
       - "6379:6379"
   celery:
-    build:
-      context: .
+    build: .
     restart: always
     command: celery -A Blog_v2 worker -l info
     volumes:
@@ -40,3 +39,12 @@ services:
       - web
       - redis
       - db
+  flower:
+    image: mher/flower
+    env_file:
+      - ./.env.dev
+    ports:
+      - "5555:5555"
+    depends_on:
+      - redis
+      - celery
