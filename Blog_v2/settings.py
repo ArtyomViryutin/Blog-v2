@@ -135,9 +135,9 @@ CACHES = {
     }
 }
 
-# Static files (CSS, JavaScript, Images)
+
 STATIC_URL = '/static/'
-STATIC_DIR = BASE_DIR / 'static'
+STATIC_DIR = BASE_DIR / 'staticfiles'
 
 # STATICFILES_DIRS = [STATIC_DIR]  # NEED
 STATIC_ROOT = BASE_DIR / 'staticfiles'
