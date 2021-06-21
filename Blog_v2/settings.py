@@ -28,7 +28,7 @@ SECRET_KEY = os.environ.get('SECRET_KEY', 'cg#p$g+j9tax!#a3cup@1$8obt2_+&k3q+pmu
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = bool(os.environ.get('DEBUG', True))
 
-ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS', 'localhost').split()
+ALLOWED_HOSTS = ['artyom-blog.herokuapp.com', '127.0.0.1']
 
 
 # Application definition
@@ -156,10 +156,10 @@ LOGIN_URL = 'login'
 LOGIN_REDIRECT_URL = '/'
 
 # SMTP settings
-EMAIL_BACKEND = os.environ.get('EMAIL_BACKEND', 'django.core.mail.backends.dummy.EmailBackend')
-EMAIL_USE_TLS = bool(os.environ.get('EMAIL_USE_TLS', 1))
-EMAIL_HOST = os.environ.get('EMAIL_HOST', 'email_host')
-EMAIL_PORT = int(os.environ.get('EMAIL_PORT', 0))
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
 EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER', 'user')
 EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD', 'password')
 DEFAULT_FROM_EMAIL = os.environ.get('DEFAULT_FROM_EMAIL', 'from_email')
