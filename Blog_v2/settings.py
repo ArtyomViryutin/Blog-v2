@@ -11,6 +11,9 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 import os
 from pathlib import Path
+import django_heroku
+import dj_database_url
+import django_redis
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -20,12 +23,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ.get('SECRET_KEY')
+SECRET_KEY = os.environ.get('SECRET_KEY', 'cg#p$g+j9tax!#a3cup@1$8obt2_+&k3q+pmu)5%asj6yjpkag')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = int(os.environ.get('DEBUG', 0))
+DEBUG = bool(os.environ.get('DEBUG', True))
 
-ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS').split()
+ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS', 'localhost').split()
 
 
 # Application definition
@@ -89,6 +92,8 @@ DATABASES = {
         'PORT': os.environ.get('DATABASE_PORT', '5432')
     }
 }
+db_from_env = dj_database_url.config(conn_max_age=600)
+DATABASES['default'].update(db_from_env)
 
 
 # Password validation
@@ -152,7 +157,7 @@ LOGIN_REDIRECT_URL = '/'
 
 # SMTP settings
 EMAIL_BACKEND = os.environ.get('EMAIL_BACKEND', 'django.core.mail.backends.dummy.EmailBackend')
-EMAIL_USE_TLS = int(os.environ.get('EMAIL_USE_TLS'), 0)
+EMAIL_USE_TLS = bool(os.environ.get('EMAIL_USE_TLS', 1))
 EMAIL_HOST = os.environ.get('EMAIL_HOST', 'email_host')
 EMAIL_PORT = int(os.environ.get('EMAIL_PORT', 0))
 EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER', 'user')
@@ -168,3 +173,5 @@ CELERY_TASK_SERIALIZER = 'json'
 CELERY_RESULT_SERIALIZER = 'json'
 CELERY_TIMEZONE = TIME_ZONE
 
+
+django_heroku.settings(locals())
