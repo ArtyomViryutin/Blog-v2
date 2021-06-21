@@ -140,7 +140,7 @@ STATIC_URL = '/static/'
 STATIC_DIR = BASE_DIR / 'static'
 
 # STATICFILES_DIRS = [STATIC_DIR]  # NEED
-STATIC_ROOT = BASE_DIR / 'staticfiles'
+STATIC_ROOT = BASE_DIR / 'static'
 
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
