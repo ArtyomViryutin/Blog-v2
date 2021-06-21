@@ -139,7 +139,7 @@ CACHES = {
 STATIC_URL = '/static/'
 STATIC_DIR = BASE_DIR / 'static'
 
-STATICFILES_DIRS = [STATIC_DIR]  # NEED
+# STATICFILES_DIRS = [STATIC_DIR]  # NEED
 STATIC_ROOT = BASE_DIR / 'static'
 
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
