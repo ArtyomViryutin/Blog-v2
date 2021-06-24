@@ -4,7 +4,7 @@ from django.views.decorators.cache import cache_page
 from posts import views
 
 urlpatterns = [
-    path('', cache_page(15)(views.PostsListView.as_view()), name='index'),
+    path('', cache_page(1)(views.PostsListView.as_view()), name='index'),
     path('follow/', views.FollowPostsListView.as_view(), name='follow'),
     path('new/', views.PostCreateView.as_view(), name='new_post'),
     path('<str:username>/', views.ProfileView.as_view(), name='profile'),

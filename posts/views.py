@@ -14,7 +14,7 @@ User = get_user_model()
 
 
 class PostsListView(ListView):
-    queryset = Post.objects.all()
+    queryset = Post.objects.all().select_related('author')
     template_name = 'index.html'
     ordering = '-pub_date'
     paginate_by = 10
