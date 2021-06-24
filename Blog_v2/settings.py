@@ -20,12 +20,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ.get('SECRET_KEY')
+SECRET_KEY = os.environ.get('SECRET_KEY', 'foo')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = int(os.environ.get('DEBUG', 0))
 
-ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS').split()
+ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS', 'localhost 127.0.0.1').split()
 
 
 # Application definition
@@ -134,7 +134,7 @@ CACHES = {
 STATIC_URL = '/static/'
 STATIC_DIR = BASE_DIR / 'static'
 # STATICFILES_DIRS = [STATIC_DIR]  # NEED
-STATIC_ROOT = BASE_DIR / 'static'
+STATIC_ROOT = BASE_DIR / 'staticfiles'
 
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
@@ -152,7 +152,7 @@ LOGIN_REDIRECT_URL = '/'
 
 # SMTP settings
 EMAIL_BACKEND = os.environ.get('EMAIL_BACKEND', 'django.core.mail.backends.dummy.EmailBackend')
-EMAIL_USE_TLS = int(os.environ.get('EMAIL_USE_TLS'), 0)
+EMAIL_USE_TLS = int(os.environ.get('EMAIL_USE_TLS', 1))
 EMAIL_HOST = os.environ.get('EMAIL_HOST', 'email_host')
 EMAIL_PORT = int(os.environ.get('EMAIL_PORT', 0))
 EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER', 'user')

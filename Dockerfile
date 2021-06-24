@@ -20,10 +20,3 @@ RUN pip install -r requirements.txt
 COPY . /app/
 
 
-RUN adduser -D artyom
-USER artyom
-
-
-#CMD gunicorn hello_django.wsgi:application --bind 0.0.0.0:$PORT
-
-
