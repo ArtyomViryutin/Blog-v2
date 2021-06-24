@@ -44,7 +44,6 @@ INSTALLED_APPS = [
     'users',
     'posts',
     'about',
-    'scout_apm.django'
 ]
 
 MIDDLEWARE = [
@@ -179,7 +178,4 @@ CELERY_TIMEZONE = TIME_ZONE
 
 django_heroku.settings(locals())
 
-SCOUT_MONITOR = True
-SCOUT_KEY = "SVVK5JSOGnhCM6JUtZf7"
-SCOUT_NAME = "Scout"
 
