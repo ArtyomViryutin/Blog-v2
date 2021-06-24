@@ -182,4 +182,4 @@ django_heroku.settings(locals())
 
 SCOUT_MONITORING = True
 SCOUT_KEY = 'SVVK5JSOGnhCM6JUtZf7'
-
+SCOUT_NAME = 'Blog'
