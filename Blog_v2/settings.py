@@ -11,8 +11,9 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 import os
 from pathlib import Path
-import django_heroku
+
 import dj_database_url
+import django_heroku
 import django_redis
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -44,6 +45,7 @@ INSTALLED_APPS = [
     'users',
     'posts',
     'about',
+    'scout_apm.django'
 ]
 
 MIDDLEWARE = [
@@ -178,4 +180,6 @@ CELERY_TIMEZONE = TIME_ZONE
 
 django_heroku.settings(locals())
 
+SCOUT_MONITORING = True
+SCOUT_KEY = 'SVVK5JSOGnhCM6JUtZf7'
 
